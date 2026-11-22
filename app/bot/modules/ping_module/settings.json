@@ -1,0 +1,16 @@
+{
+  "access": {
+    "enabled": true,
+    "devs_only": false,
+    "categories": {
+      "users": true,
+      "groups": true,
+      "supergroups": true
+    },
+    "allow_bots": false,
+    "exceptions_pos": [],
+    "exceptions_neg": [],
+    "noaccess_notif": true,
+    "limit": null
+  }
+}

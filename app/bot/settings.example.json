@@ -1,0 +1,28 @@
+{
+  "bot": {
+    "name": "taskseeker",
+    "domain": "taskseekerbot",
+    "id": 8856444951
+  },
+  "dev_ids": [
+    123456789
+  ],
+  "enable_telethon": false,
+  "messages": {
+    "timeout": 120,
+    "max_lifespan": 180
+  },
+  "access": {
+    "devs_only": false,
+    "categories": {
+      "users": true,
+      "groups": false,
+      "supergroups": false
+    },
+    "allow_bots": false,
+    "exceptions_pos": [
+      -1001234567890
+    ],
+    "exceptions_neg": []
+  }
+}

@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="ru">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=900, height=500">
+        <title>Quote Template</title>
+
+        <style>
+            * {
+                box-sizing: border-box;
+            }
+
+            html,
+            body {
+                margin: 0;
+                padding: 0;
+                width: 900px;
+                height: 500px;
+                background: transparent;
+            }
+
+            body {
+                font-family: Arial, Helvetica, sans-serif;
+            }
+
+            .quote {
+                position: relative;
+
+                display: flex;
+                flex-direction: column;
+
+                width: 900px;
+                height: 500px;
+
+                overflow: hidden;
+
+                color: #fff;
+                background: #000;
+            }
+
+            .background {
+                position: absolute;
+                top: 0;
+                left: 0;
+
+                width: 900px;
+                height: 500px;
+
+                background-size: cover;
+                background-position: center;
+                background-repeat: no-repeat;
+
+                z-index: 1;
+            }
+
+            .mask {
+                position: relative;
+                z-index: 2;
+
+                display: flex;
+                flex-direction: column;
+
+                width: 100%;
+                height: 100%;
+
+                background: rgba(0, 0, 0, 0.5);
+
+                padding-top: 70px;
+            }
+
+            .quote-frame {
+                display: flex;
+                flex-direction: row;
+                align-items: stretch;
+
+                width: 100%;
+                flex: 1;
+
+                min-height: 0;
+            }
+
+            .quote-mark {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+
+                width: 145px;
+                min-width: 145px;
+                height: 100%;
+
+                font-family: "Trebuchet MS", Arial, sans-serif;
+                font-size: 80px;
+                line-height: 1;
+                font-weight: 300;
+
+                color: rgba(255, 255, 255, 0.9);
+            }
+
+            .quote-mark:first-child {
+                margin-left: 5%;
+            }
+
+            .quote-mark:last-child {
+                margin-right: 5%;
+            }
+
+            .text {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+
+                flex: 1;
+
+                width: auto;
+                height: 100%;
+
+                min-width: 0;
+                min-height: 0;
+
+                padding: 0 20px;
+
+                font-family: "Palatino Linotype", "Book Antiqua", Palatino, serif;
+                font-size: 50px;
+                line-height: 1.35;
+                font-weight: 500;
+                font-style: normal;
+
+                text-align: center;
+
+                white-space: pre-wrap;
+                overflow-wrap: normal;
+                overflow: hidden;
+            }
+
+            .author-frame {
+                display: flex;
+                align-items: center;
+
+                width: 100%;
+                height: 150px;
+                min-height: 150px;
+
+                padding-left: 100px;
+            }
+
+            .author {
+                display: flex;
+                align-items: center;
+
+                gap: 16px;
+            }
+
+            .avatar {
+                width: 64px;
+                height: 64px;
+
+                border-radius: 50%;
+
+                object-fit: cover;
+
+                background: #444;
+
+                flex-shrink: 0;
+            }
+
+            .author-info {
+                display: flex;
+                flex-direction: column;
+
+                min-width: 0;
+            }
+
+            .name {
+                font-size: 24px;
+                line-height: 1.2;
+                font-weight: 700;
+            }
+
+            .username {
+                margin-top: 4px;
+
+                font-size: 20px;
+                line-height: 1.2;
+
+                color: rgba(255, 255, 255, 0.7);
+            }
+        </style>
+    </head>
+
+    <body>
+
+        <div class="quote">
+
+            <div class="background"></div>
+
+            <div class="mask">
+
+                <div class="quote-frame">
+
+                    <div class="quote-mark">“</div>
+
+                    <div class="text">{{TEXT}}</div>
+
+                    <div class="quote-mark">„</div>
+
+                </div>
+
+                <div class="author-frame">
+
+                    <div class="author">
+
+                        <img class="avatar" src="" alt="">
+
+                        <div class="author-info">
+
+                            <div class="name">{{NAME}}</div>
+
+                            <div class="username">{{USERNAME}}</div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <script>
+            const backgroundImage =
+                "{{BACKGROUND}}";
+
+            const backgroundSize =
+                "{{BACKGROUND_SIZE}}";
+
+            const profileImage =
+                "{{PROFILE_IMAGE}}";
+
+            const background =
+                document.querySelector(".background");
+
+            const mask =
+                document.querySelector(".mask");
+
+            const avatar =
+                document.querySelector(".avatar");
+
+            if (backgroundImage) {
+                background.style.backgroundImage =
+                    `url("${backgroundImage}")`;
+
+                background.style.backgroundSize =
+                    backgroundSize || "cover";
+
+                mask.style.background =
+                    "rgba(0, 0, 0, 0.5)";
+            } else {
+                background.style.backgroundImage = "none";
+
+                mask.style.background =
+                    "rgba(0, 0, 0, 1)";
+            }
+
+            if (profileImage) {
+                avatar.src = profileImage;
+            } else {
+                avatar.src = "";
+                avatar.style.visibility = "hidden";
+            }
+
+            const text =
+                document.querySelector(".text");
+
+            const MAX_FONT_SIZE = 65;
+            const MIN_FONT_SIZE = 3;
+
+            function fitText() {
+                let fontSize = MAX_FONT_SIZE;
+
+                text.style.fontSize =
+                    `${fontSize}px`;
+
+                while (
+                    fontSize > MIN_FONT_SIZE &&
+                    (
+                        text.scrollHeight > text.clientHeight ||
+                        text.scrollWidth > text.clientWidth
+                    )
+                ) {
+                    fontSize -= 1;
+
+                    text.style.fontSize =
+                        `${fontSize}px`;
+                }
+            }
+
+            fitText();
+        </script>
+
+    </body>
+</html>

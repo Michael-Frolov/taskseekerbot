@@ -1,0 +1,25 @@
+{
+  "access": {
+    "enabled": true,
+    "devs_only": false,
+    "categories": {
+      "users": true,
+      "groups": true,
+      "supergroups": true
+    },
+    "allow_bots": false,
+    "exceptions_pos": [],
+    "exceptions_neg": [],
+    "noaccess_notif": true,
+    "limit": {
+      "rate": 5,
+      "span": 60
+    }
+  },
+  "article_module": {
+    "articles_path": "articles.txt",
+    "database_path": "database.db",
+    "clean_chance": 0.01,
+    "article_page_length": 3072
+  }
+}

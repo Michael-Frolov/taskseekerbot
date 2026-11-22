@@ -1,0 +1,23 @@
+{
+  "access": {
+    "enabled": true,
+    "devs_only": false,
+    "categories": {
+      "users": true,
+      "groups": true,
+      "supergroups": true
+    },
+    "allow_bots": false,
+    "exceptions_pos": [],
+    "exceptions_neg": [],
+    "noaccess_notif": true,
+    "limit": {
+      "rate": 5,
+      "span": 60.0
+    }
+  },
+  "kyoko_module": {
+    "file_id": null,
+    "file_path": "proxzia-kyoko.mp4"
+  }
+}

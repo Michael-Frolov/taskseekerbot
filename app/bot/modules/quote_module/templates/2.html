@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+
+<style>
+    html, body {
+        margin: 0;
+        padding: 0;
+        width: 900px;
+        height: 500px;
+        overflow: hidden;
+        background: transparent;
+    }
+
+    .quote {
+        position: relative;
+        width: 900px;
+        height: 500px;
+        overflow: hidden;
+        background: #000;
+        color: #fff;
+    }
+
+    .background {
+        position: absolute;
+        top: 0;
+        right: 0;
+
+        width: 700px;
+        height: 500px;
+
+        object-fit: {{BACKGROUND_SIZE}};
+        filter: grayscale(100%);
+        z-index: 0;
+    }
+
+    .mask {
+        position: absolute;
+        inset: 0;
+        z-index: 1;
+        background: rgba(0, 0, 0, 0.15);
+    }
+
+    .right-darkening {
+        position: absolute;
+        inset: 0;
+        z-index: 1;
+
+        background: linear-gradient(
+            to right,
+            rgba(0, 0, 0, 0) 35%,
+            rgba(0, 0, 0, 0.05) 45%,
+            rgba(0, 0, 0, 0.15) 55%,
+            rgba(0, 0, 0, 0.30) 65%,
+            rgba(0, 0, 0, 0.45) 75%,
+            rgba(0, 0, 0, 0.55) 100%
+        );
+    }
+
+    .profile-circle {
+        position: absolute;
+
+        width: 500px;
+        height: 500px;
+
+        left: -34px;
+        top: 0;
+
+        z-index: 2;
+
+        -webkit-mask-image: radial-gradient(
+            ellipse 430px 500px at 15% 50%,
+            #000 0%,
+            #000 60%,
+            rgba(0, 0, 0, 0.98) 68%,
+            rgba(0, 0, 0, 0.85) 75%,
+            rgba(0, 0, 0, 0.60) 82%,
+            rgba(0, 0, 0, 0.30) 88%,
+            transparent 95%
+        );
+
+        mask-image: radial-gradient(
+            ellipse 430px 500px at 15% 50%,
+            #000 0%,
+            #000 60%,
+            rgba(0, 0, 0, 0.98) 68%,
+            rgba(0, 0, 0, 0.85) 75%,
+            rgba(0, 0, 0, 0.60) 82%,
+            rgba(0, 0, 0, 0.30) 88%,
+            transparent 95%
+        );
+
+        -webkit-mask-repeat: no-repeat;
+        mask-repeat: no-repeat;
+
+        -webkit-mask-size: 100% 100%;
+        mask-size: 100% 100%;
+    }
+
+    .profile-circle img {
+        display: block;
+
+        width: 100%;
+        height: 100%;
+
+        object-fit: cover;
+        object-position: center;
+
+        filter: grayscale(100%);
+    }
+
+    .quote-mark {
+        position: absolute;
+
+        top: 62px;
+        left: 602px;
+
+        width: 100px;
+
+        z-index: 4;
+
+        font-family: "Trebuchet MS", Arial, sans-serif;
+        font-size: 105px;
+        line-height: 0.8;
+        font-weight: 300;
+
+        text-align: center;
+    }
+
+    .text {
+        position: absolute;
+
+        top: 125px;
+        left: 430px;
+
+        width: 445px;
+        height: 210px;
+
+        padding: 0 15px;
+        box-sizing: border-box;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        z-index: 4;
+
+        font-family:
+            "Palatino Linotype",
+            "Book Antiqua",
+            Palatino,
+            "Times New Roman",
+            serif;
+
+        font-size: 38px;
+        line-height: 1.30;
+        font-weight: 700;
+
+        text-align: center;
+
+        white-space: pre-wrap;
+        overflow-wrap: normal;
+        overflow: hidden;
+    }
+
+    .author {
+        position: absolute;
+        right: 80px;
+        bottom: 60px;
+
+        width: 400px;
+        box-sizing: border-box;
+
+        z-index: 4;
+
+        font-family:
+            "Palatino Linotype",
+            "Book Antiqua",
+            Palatino,
+            "Times New Roman",
+            serif;
+
+        font-size: 38px;
+        line-height: 1.1;
+        font-style: italic;
+        text-align: right;
+
+        white-space: nowrap;
+        overflow: hidden;
+    }
+
+    .author > div:first-child {
+        width: 100%;
+        overflow: hidden;
+        white-space: nowrap;
+    }
+
+    .username {
+        display: block;
+        width: 100%;
+        box-sizing: border-box;
+
+        margin-top: 7px;
+        font-size: 26px;
+        line-height: 1.1;
+        opacity: 0.75;
+
+        white-space: nowrap;
+        overflow: hidden;
+    }
+
+</style>
+
+</head>
+
+<body>
+
+<div class="quote">
+
+    <img
+        class="background"
+        src="{{BACKGROUND}}"
+    >
+
+    <div class="mask"></div>
+
+    <div class="right-darkening"></div>
+
+    <div class="profile-circle">
+        <img
+            src="{{PROFILE_IMAGE}}"
+        >
+    </div>
+
+    <div class="quote-mark">“</div>
+
+    <div class="text">{{TEXT}}</div>
+
+    <div class="author">
+        <div>{{NAME}}</div>
+        <div class="username">{{USERNAME}}</div>
+    </div>
+
+</div>
+
+
+<script>
+    const textElement = document.querySelector(".text");
+
+    const profileCircle = document.querySelector(".profile-circle");
+    const profileImage = profileCircle.querySelector("img");
+
+    const authorElement = document.querySelector(".author");
+    const authorNameElement = authorElement.firstElementChild;
+    const usernameElement = document.querySelector(".username");
+
+    const MAX_FONT_SIZE = 38;
+    const MIN_FONT_SIZE = 3;
+
+    if (!profileImage.getAttribute("src")) {
+        profileCircle.style.display = "none";
+    }
+
+    profileImage.addEventListener("error", () => {
+        profileCircle.style.display = "none";
+    });
+
+    function fitText() {
+        let fontSize = MAX_FONT_SIZE;
+
+        textElement.style.fontSize = `${fontSize}px`;
+
+        while (
+            (
+                textElement.scrollHeight > textElement.clientHeight ||
+                textElement.scrollWidth > textElement.clientWidth
+            ) &&
+            fontSize > MIN_FONT_SIZE
+        ) {
+            fontSize--;
+            textElement.style.fontSize = `${fontSize}px`;
+        }
+    }
+
+    function fitSingleLine(element, maxFontSize) {
+        let fontSize = maxFontSize;
+
+        element.style.fontSize = `${fontSize}px`;
+
+        while (
+            element.scrollWidth > element.clientWidth &&
+            fontSize > MIN_FONT_SIZE
+        ) {
+            fontSize--;
+            element.style.fontSize = `${fontSize}px`;
+        }
+    }
+
+    function fitAuthorName() {
+        fitSingleLine(authorNameElement, 38);
+    }
+
+    function fitUsername() {
+        fitSingleLine(usernameElement, 26);
+    }
+
+    fitText();
+    fitAuthorName();
+    fitUsername();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,33 @@
+{
+  "access": {
+    "enabled": true,
+    "devs_only": false,
+    "categories": {
+      "users": true,
+      "groups": true,
+      "supergroups": true
+    },
+    "allow_bots": false,
+    "exceptions_pos": [],
+    "exceptions_neg": [],
+    "noaccess_notif": false,
+    "limit": {
+      "rate": 3,
+      "span": 60
+    }
+  },
+  "quote_module": {
+    "stt_model": {
+      "model": "base",
+      "hf_hub_cache_path": "D:/HuggingFace/hub",
+      "max_voice_message_duration": 60,
+      "transcribing_timeout": 600
+    },
+    "path": {
+      "templates": "templates",
+      "stock_profile_images": "profile images",
+      "stock_background_images": "background images",
+      "output": "outputs"
+    }
+  }
+}

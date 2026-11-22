@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+
+<style>
+    html, body {
+        margin: 0;
+        padding: 0;
+        width: 900px;
+        height: 500px;
+        overflow: hidden;
+        background: transparent;
+    }
+
+    .quote {
+        position: relative;
+        width: 900px;
+        height: 500px;
+        overflow: hidden;
+        background: #000;
+        color: #fff;
+    }
+
+    .mask {
+        position: absolute;
+        inset: 0;
+        z-index: 1;
+        background: rgba(0, 0, 0, 0.15);
+    }
+
+    .profile-circle {
+        position: absolute;
+
+        width: 400px;
+        height: 400px;
+
+        right: 50px;
+        top: 50px;
+
+        z-index: 2;
+
+        overflow: hidden;
+
+        border-radius: 50%;
+    }
+
+    .profile-circle img {
+        display: block;
+
+        width: 100%;
+        height: 100%;
+
+        object-fit: cover;
+        object-position: center;
+    }
+
+    .quote-mark {
+        position: absolute;
+
+        top: 62px;
+        left: 198px;
+
+        width: 100px;
+
+        z-index: 4;
+
+        font-family: "Trebuchet MS", Arial, sans-serif;
+        font-size: 105px;
+        line-height: 0.8;
+        font-weight: 300;
+
+        text-align: center;
+    }
+
+    .text {
+        position: absolute;
+
+        top: 125px;
+        left: 25px;
+
+        width: 445px;
+        height: 210px;
+
+        padding: 0 15px;
+        box-sizing: border-box;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        z-index: 4;
+
+        font-family:
+            "Palatino Linotype",
+            "Book Antiqua",
+            Palatino,
+            "Times New Roman",
+            serif;
+
+        font-size: 34px;
+        line-height: 1.30;
+        font-weight: 700;
+
+        text-align: center;
+
+        white-space: pre-wrap;
+        overflow-wrap: anywhere;
+        overflow: hidden;
+    }
+
+    .author {
+        position: absolute;
+
+        left: 80px;
+        bottom: 65px;
+
+        max-width: 500px;
+
+        z-index: 4;
+
+        font-family:
+            "Palatino Linotype",
+            "Book Antiqua",
+            Palatino,
+            "Times New Roman",
+            serif;
+
+        font-size: 38px;
+        line-height: 1.1;
+
+        font-style: italic;
+
+        text-align: left;
+    }
+
+    .username {
+        margin-top: 7px;
+        font-size: 26px;
+        opacity: 0.75;
+    }
+</style>
+
+</head>
+
+<body>
+
+<div class="quote">
+
+    <div class="mask"></div>
+
+    <div class="profile-circle">
+        <img
+            src="{{PROFILE_IMAGE}}"
+        >
+    </div>
+
+    <div class="quote-mark">”</div>
+
+    <div class="text">{{TEXT}}</div>
+
+    <div class="author">
+        <div>{{NAME}}</div>
+        <div class="username">{{USERNAME}}</div>
+    </div>
+
+</div>
+
+<script>
+    const textElement = document.querySelector(".text");
+
+    const profileCircle = document.querySelector(".profile-circle");
+    const profileImage = profileCircle.querySelector("img");
+
+    if (!profileImage.getAttribute("src")) {
+        profileCircle.style.display = "none";
+    }
+
+    profileImage.addEventListener("error", () => {
+        profileCircle.style.display = "none";
+    });
+
+    const MAX_FONT_SIZE = 34;
+    const MIN_FONT_SIZE = 3;
+
+    function fitText() {
+        let fontSize = MAX_FONT_SIZE;
+
+        textElement.style.fontSize = `${fontSize}px`;
+
+        while (
+            (
+                textElement.scrollHeight > textElement.clientHeight ||
+                textElement.scrollWidth > textElement.clientWidth
+            ) &&
+            fontSize > MIN_FONT_SIZE
+        ) {
+            fontSize -= 1;
+            textElement.style.fontSize = `${fontSize}px`;
+        }
+    }
+
+    fitText();
+</script>
+
+</body>
+</html>
